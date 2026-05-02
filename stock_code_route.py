@@ -119,34 +119,37 @@ def is_in_uptrend(ticker, prices, ema_50, ema_200):
     return False
     
 def print_call():
-    h=1
-    mkstr = '\n---------------------Date of Analysis: ' + str(date.today()) + "----------------\n"
-    mkstr = mkstr + "\n\n--->stocks near 50 day Moving Average:"
-    for goods in list(set(ma_stocks50)):
-      mkstr = mkstr + "\n" + str(h)+"."+goods
-      h=h+1
-    h=1
-    mkstr = mkstr + "\n\n--->stocks near 200 day Moving Average:"
-    for goods in list(set(ma_stocks200)):
-      mkstr = mkstr + "\n" + str(h)+"."+goods
-      h=h+1
-    mkstr = mkstr + "\n\n--->stocks at RSI Buy:"
-    h=1
-    for goods in list(set(rsi_stocks)):
-      mkstr = mkstr + "\n" + str(h)+"."+goods
-      h=h+1
-    mkstr = mkstr + "\n\n--->stocks in Uptrend:"
-    h=1
-    for goods in list(set(stocks_in_uptrend)):
-      mkstr = mkstr + "\n" + str(h)+"."+goods
-      h=h+1
-    mkstr = mkstr + "\n\n--->stocks meeting all criteria:"
-    h=1
-    for goods in list(set(most_eligible_stocks)):
-      mkstr = mkstr + "\n" + str(h)+"."+goods
-      h=h+1
+    final_obj = {}
+    final_obj['Date_of_Analysis'] = str(date.today())
+    stock_data = []
     
-    return mkstr
+    stock_data.append({
+        'title':'stocks near 50 day Moving Average',
+        'data':list(set(ma_stocks50))
+    })
+
+    stock_data.append({
+        'title':'stocks near 200 day Moving Average',
+        'data':list(set(ma_stocks200))
+    })
+
+    stock_data.append({
+        'title':'stocks at RSI Buy',
+        'data':list(set(rsi_stocks))
+    })
+
+    stock_data.append({
+        'title':'stocks in Uptrend',
+        'data':list(set(stocks_in_uptrend))
+    })
+
+    stock_data.append({
+        'title':'most_eligible_stocks',
+        'data':list(set(most_eligible_stocks))
+    })
+    
+    final_obj['Stock_Data'] = stock_data
+    return final_obj
  
 def program():
     for symb in symbols:
@@ -176,6 +179,4 @@ def program():
                 most_eligible_stocks.append(symb)
     
     result = print_call()
-    print(result)
-
-program()
+    return result

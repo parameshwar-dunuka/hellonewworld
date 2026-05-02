@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-
+from stock_code_route import program
 app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello FastAPI"}
+    return program()
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
